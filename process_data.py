@@ -50,7 +50,7 @@ def process_data(files):
 
 def insert_data(session, file):
     """
-
+    Reads data from new datafile csv into tables on Cassandra cluster.
     """
     #file = 'event_datafile_new.csv'
 
