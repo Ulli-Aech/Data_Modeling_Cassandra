@@ -9,6 +9,8 @@ import csv
 import cassandra
 from cassandra.cluster import Cluster
 
+from cql_queries import insert_artist_songs, insert_artist_song_username, insert_username_song
+
 files = '/event_data'
 
 def process_data(files):
@@ -59,18 +61,11 @@ def insert_data(session, file):
         next(csvreader) # skip header
         for line in csvreader:
 
-            query = "INSERT INTO artist_songs (sessionId, itemInSession, artist, song_title, songs_length)"
-            query = query + "VALUES (%s, %s, %s, %s, %s)"
-            
-            session.execute(query, (line[8], line[3], line[0], line[9], line[5]))
+            session.execute(insert_artist_songs, (line[8], line[3], line[0], line[9], line[5]))
 
-            query = "INSERT INTO artist_song_username (session_id, itemInSession, user_id, firstname_user, lastname_user, artist, song_title)"
-            query = query + ("VALUES (%s, %s, %s, %s, %s, %s, %s)")
-            session.execute(query, (line[8], line[3], line[10], line[1], line[4], line[0], line[9]))
+            session.execute(insert_artist_song_username, (line[8], line[3], line[10], line[1], line[4], line[0], line[9]))
 
-            query = "INSERT INTO username_song (song_title, session_id, itemInSession, firstname_user, lastname_user)" 
-            query = query + ("VALUES (%s, %s, %s, %s, %s)")
-            session.execute(query , (line[9], line[8], line[3], line[1], line[4]))
+            session.execute(insert_username_song , (line[9], line[8], line[3], line[1], line[4]))
 
 def main():
     """

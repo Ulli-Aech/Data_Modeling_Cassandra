@@ -1,5 +1,6 @@
 import cassandra
 from cassandra.cluster import Cluster
+from cql_queries import create_keyspace, drop_table_queries, create_table_queries
 
 def create_keyspace():
     """
@@ -11,9 +12,7 @@ def create_keyspace():
     cluster = Cluster(['127.0.0.1'])
     session = cluster.connect()
 
-    session.execute("""CREATE KEYSPACE IF NOT EXISTS sparkifydb
-    WITH REPLICATION =
-    { 'class': 'SimpleStrategy', 'replication_factor' : 1}""")
+    session.execute(create_keyspace)
 
     session.set_keyspace('sparkifydb')
 
@@ -23,30 +22,18 @@ def drop_tables(session):
     """
     - drops tables if they already exist
     """
-    session.execute("DROP TABLE IF EXISTS artist_songs")
+    for query in drop_tables:
+        session.execute(query)
 
-    session.execute("DROP TABLE IF EXISTS artist_song_username")
-
-    session.execute("DROP TABLE IF EXISTS username_song ;")
 
 def create_tables(session):
     """
     - creates tables 
     """
-    query = ("CREATE TABLE IF NOT EXISTS artist_songs")
-    query = query + ("(sessionId varchar, itemInSession varchar, artist text, song_title text, songs_length varchar, PRIMARY KEY((sessionId, itemInSession), artist , song_title, songs_length))")
-    session.execute(query)
 
-    query = ("CREATE TABLE IF NOT EXISTS artist_song_username")
-    query = query + ("(session_id varchar, itemInSession varchar, \
-                        user_id varchar, firstname_user text, lastname_user text,\
-                        artist text, song_title text, \
-                        PRIMARY KEY ((session_id, user_id), itemInSession))")
-    session.execute(query)
+    for query in create_table_queries:
+        session.execute(query)
 
-    session.execute("""CREATE TABLE IF NOT EXISTS username_song (song_title text, session_id varchar,
-                            itemInSession varchar, firstname_user text, lastname_user text,
-                            PRIMARY KEY ((song_title), session_id, itemInSession))""")
 
 def main():
     """
