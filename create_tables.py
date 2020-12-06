@@ -17,7 +17,7 @@ def create_keyspace():
 
     session.set_keyspace('sparkifydb')
 
-    return session
+    return session, cluster
 
 def drop_tables(session):
     """
@@ -55,7 +55,7 @@ def main():
     - creates tables 
     - closes connection
     """
-    session = create_keyspace()
+    session, cluster = create_keyspace()
 
     drop_tables(session)
     create_tables(session)
