@@ -6,6 +6,9 @@ import numpy as np
 import json
 import csv
 
+import cassandra
+from cassandra.cluster import Cluster
+
 files = '/event_data'
 
 def process_data(files):
@@ -43,6 +46,46 @@ def process_data(files):
 
     #with open('event_datafile_new.csv', 'r', encoding = 'utf8') as f:
     #    print(sum(1 for line in f))
+    return 'event_datafile_new.csv'
 
-def insert_data():
-    
+def insert_data(session, file):
+    """
+
+    """
+    #file = 'event_datafile_new.csv'
+
+    with open(file, encoding = 'utf8') as f:
+        csvreader = csv.reader(f)
+        next(csvreader) # skip header
+        for line in csvreader:
+
+            query = "INSERT INTO artist_songs (sessionId, itemInSession, artist, song_title, songs_length)"
+            query = query + "VALUES (%s, %s, %s, %s, %s)"
+            
+            session.execute(query, (line[8], line[3], line[0], line[9], line[5]))
+
+            query = "INSERT INTO artist_song_username (session_id, itemInSession, user_id, firstname_user, lastname_user, artist, song_title)"
+            query = query + ("VALUES (%s, %s, %s, %s, %s, %s, %s)")
+            session.execute(query, (line[8], line[3], line[10], line[1], line[4], line[0], line[9]))
+
+            query = "INSERT INTO username_song (song_title, session_id, itemInSession, firstname_user, lastname_user)" 
+            query = query + ("VALUES (%s, %s, %s, %s, %s)")
+            session.execute(query , (line[9], line[8], line[3], line[1], line[4]))
+
+def main():
+    """
+    Processes event data files into new datafile csv and inserts data into 
+    tables in sparkifydb.
+    """
+
+    cluster = Cluster(['127.0.0.1'])
+    session = cluster.connect()
+    session.set_keyspace('sparkifydb')
+
+    insert_data(session, process_data(files))
+
+    session.shutdown()
+    cluster.shutdown()    
+
+if __name__ == "__main__":
+    main()
