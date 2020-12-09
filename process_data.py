@@ -61,11 +61,11 @@ def insert_data(session, file):
         next(csvreader) # skip header
         for line in csvreader:
 
-            session.execute(insert_artist_songs, (line[8], line[3], line[0], line[9], line[5]))
+            session.execute(insert_artist_songs, ( int(line[8]), int(line[3]), line[0], line[9], float(line[5]) ))
 
-            session.execute(insert_artist_song_username, (line[8], line[3], line[10], line[1], line[4], line[0], line[9]))
+            session.execute(insert_artist_song_username, ( int(line[10]), int(line[8]), int(line[3]),  line[1], line[4], line[0], line[9] ))
 
-            session.execute(insert_username_song , (line[9], line[8], line[3], line[1], line[4]))
+            session.execute(insert_username_song , ( line[9], int(line[8]), int(line[3]), line[1], line[4] ))
 
 def main():
     """
