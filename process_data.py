@@ -53,6 +53,9 @@ def process_data(files):
 def insert_data(session, file):
     """
     Reads data from new datafile csv into tables on Cassandra cluster.
+
+    - takes in a connection with a cassandra cluster as session 
+    and a file as file.
     """
     #file = 'event_datafile_new.csv'
 
@@ -71,6 +74,11 @@ def main():
     """
     Processes event data files into new datafile csv and inserts data into 
     tables in sparkifydb.
+
+    - creates connection and session on cluster
+    - processes data into new file
+    - inserts data into tables
+    - closes session and connection
     """
 
     cluster = Cluster(['127.0.0.1'])
