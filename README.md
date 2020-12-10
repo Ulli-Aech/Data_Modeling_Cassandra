@@ -77,7 +77,7 @@ The username_song table is modeled to this query:
 **2. Give me only the following: name of artist, song (sorted by itemInSession) and user (first and last name) for userid = 10, sessionid = 182**        
 **3. Give me every user name (first and last) in my music app history who listened to the song 'All Hands Against His Own'**
  
-example CQL create table query: 
+example CQL create table query:   
 <code>create_artist_songs = ("""CREATE TABLE IF NOT EXISTS artist_songs   
                              (sessionId int, itemInSession int, artist text,   
                              song_title text, songs_length float,   
