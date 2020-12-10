@@ -86,13 +86,12 @@ example CQL create table query:
   
 3) After creating each table and inserting data into it, the code was tested by querying the tables. The output of each query was saved in a pandas dataframe for readability. 
 
-![Screenshot of the output of query2 as a pandas dataframe](/images/df_query2_output.jpg "DF output query2")
+![Screenshot of the output of query2 as a pandas dataframe](/images/df_query2_output.png "DF output query2")
 
 The project instructons by Udacity stop with the end of the notebook. 
   
 4) Based on the code in the jupyter notebook I tried to build an ETL pipeline in Python with a similiar structure as in the [PostgreSQL Data Modeling](https://github.com/Ulli-H/Data_Modeling_Postgres) project.
 
-  
 5) In the end I confirmed that the process is successfull by running the files in this order:
 - create_tables.py
 - process_data.py
