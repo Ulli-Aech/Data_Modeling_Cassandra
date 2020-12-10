@@ -30,7 +30,8 @@ All data was provided by Udacity as part of the data engineer nanodegree.
 
 The database is named "sparkifydb" and consists out of the following tables:  
 
-**- artist_songs table:** this table is modeled to query for the artist(name), songtitle and songlength based on session ID and nr. of item streamed in session.  
+### - artist_songs table:  
+This table is modeled to query for the artist(name), songtitle and songlength based on session ID and nr. of item streamed in session.  
 Columns: sessionId, itemInSession, artist, song_title, songs_length  
 **Primary Key: sessionId, itemInSession (composite partition key without clustering columns) **  
 
@@ -41,7 +42,8 @@ The artist_songs table is modeled to this query:
         WHERE sessionId = 338 AND itemInSession = 4"""
 </code>  
          
-**- artist_song_username table:** is modeled to query for artist(name), songtitle, firstname of the user and lastname of the user based on user ID and session ID.  
+### - artist_song_username table: 
+The table is modeled to query for artist(name), songtitle, firstname of the user and lastname of the user based on user ID and session ID.  
 Columns: user_id, session_id, itemInSession, firstname_user, lastname_user, artist, song_title   
 **Primary Key: (user_id, session_id), itemInSession (compound primary key with a composite partition key)**  
 
@@ -52,7 +54,8 @@ The artist_song_username table is modeled to this query:
          WHERE user_id = 10 AND session_id = 182 """
 </code>  
          
-**- username_song table:** is modeled to query for the firstname and lastname of the users based on a songtitle that was streamed.   
+### - username_song table:  
+It is modeled to query for the firstname and lastname of the users based on a songtitle that was streamed.   
 Columns: song_title, session_id, itemInSession int, firstname_user, lastname_user
 **Primary Key: (song_title), session_id, itemInSession (compound primary key with a simple partition key and two clustering columns)**
 
@@ -89,12 +92,11 @@ The project instructons by Udacity stop with the end of the notebook.
   
 4) Based on the code in the jupyter notebook I tried to build an ETL pipeline in Python with a similiar structure as in the [PostgreSQL Data Modeling](https://github.com/Ulli-H/Data_Modeling_Postgres) project.
 
-In the etl.ipynb I developed the etl processes for the different tables and used that code to finalize the etl.py to build the pipeline. In between I used the test.ipynb to varify the different steps and check if the code worked as expected. 
   
-4) In the end I confirmed that the process is successfull by running the files in this order:
+5) In the end I confirmed that the process is successfull by running the files in this order:
 - create_tables.py
-- etl.py
-- test.ipynb (for confirmation)
+- process_data.py
+- test.py (to query the tables and show the resulting dataframes)
 
 
 ## Repository Organization
@@ -103,7 +105,7 @@ In the etl.ipynb I developed the etl processes for the different tables and used
   
 2) The images directory contains two the two images used in the readme file. 
 
-3) The python files consist out of the create_tables.py which creates the sparkify database and necessary tables, the process_data.py which extracts the data from the data files and inserts them into the database and the cql_queries.py with the  queries used in create_tables.py and process_data.py  
+3) The python files consist out of the create_tables.py which creates the sparkify database and necessary tables, the process_data.py which extracts the data from the data files and inserts them into the database and the cql_queries.py with the queries used in create_tables.py and process_data.py  
 
 
 ## Links
