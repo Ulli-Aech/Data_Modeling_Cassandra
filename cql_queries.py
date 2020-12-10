@@ -69,4 +69,4 @@ query3 = """SELECT firstname_user, lastname_user
 
 drop_table_queries = [drop_artist_songs, drop_artist_song_username, drop_username_song]
 
-create_table_queries = [create_artist_songs, craete_artist_song_username, create_username_song]
+create_table_queries = [create_artist_songs, create_artist_song_username, create_username_song]

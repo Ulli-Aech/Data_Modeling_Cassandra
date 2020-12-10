@@ -12,7 +12,9 @@ def create_keyspace():
     cluster = Cluster(['127.0.0.1'])
     session = cluster.connect()
 
-    session.execute(create_keyspace)
+    session.execute("""CREATE KEYSPACE IF NOT EXISTS sparkifydb
+    WITH REPLICATION =
+    { 'class': 'SimpleStrategy', 'replication_factor' : 1}""")
 
     session.set_keyspace('sparkifydb')
 
@@ -22,7 +24,7 @@ def drop_tables(session):
     """
     - drops tables if they already exist
     """
-    for query in drop_tables:
+    for query in drop_table_queries:
         session.execute(query)
 
 
