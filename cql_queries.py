@@ -16,8 +16,7 @@ drop_username_song = ("DROP TABLE IF EXISTS username_song")
 create_artist_songs = ("""CREATE TABLE IF NOT EXISTS artist_songs 
                              (sessionId int, itemInSession int, artist text, 
                              song_title text, songs_length float, 
-                             PRIMARY KEY((sessionId, itemInSession), artist,
-                             song_title, songs_length))
+                             PRIMARY KEY(sessionId, itemInSession))
 """)
 
 create_artist_song_username = ("""CREATE TABLE IF NOT EXISTS artist_song_username
